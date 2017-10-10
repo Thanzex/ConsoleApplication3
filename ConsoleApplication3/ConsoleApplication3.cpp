@@ -19,14 +19,27 @@ using namespace std;
 int main()
 {
 	std::string input;
+	std::string parallel;
+	int pos = 0;
 	cout << "Insert Math Expression: \n >";
 	cin >> input;
 
 	for (int i =0 ; i< input.length() ; i++)
 	{
 		int ind = Block::FindEnd(&input[i]);
+		cout << "\n" << ind;
+		parallel += '(';
+		for (int j = 0; j < ind; j++)
+		{
+			parallel += input[i + j];
+		}
+		parallel += ')'; 
+		parallel += input[i+ind];
 		i +=ind;
+
 	}
+
+	cout << "\n" << parallel;
 
 	
     
