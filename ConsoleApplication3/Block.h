@@ -5,7 +5,7 @@ class Block
 public:
 	Block();
 	~Block();
-	&char FindEnd(&char);
+	char& FindEnd(char&);
 
 private:
 
@@ -19,7 +19,7 @@ Block::~Block()
 {
 }
 
-&char Block::FindEnd(&char a)
+char& Block::FindEnd(char& a)
  {
 	 int i=0;
 	 while(std::find(Op::operators[0],Op::operators[4],a[i+1]))

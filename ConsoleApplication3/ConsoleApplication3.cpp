@@ -22,7 +22,6 @@ int main()
 
 	for (auto& c : input)
 	{
-
 	}
 	
     
