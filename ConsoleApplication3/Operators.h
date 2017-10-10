@@ -3,7 +3,7 @@
 class Op
 {
 public:
-	std::vector<char> operators = { '=','+','-','*','/' };
+	//static std::vector<char> operators = { '=','+','-','*','/' };
 	Op();
 	
 	~Op();
