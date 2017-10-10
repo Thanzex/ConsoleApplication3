@@ -2,10 +2,29 @@
 //
 
 #include "stdafx.h"
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <string>
+#include <vector>
 
+#include "Block.h"
+#include "Operators.h"
+#include "Vars.h"
 
+using namespace std;
 int main()
 {
-    return 0;
+	std::string input;
+	cout << "Insert Math Expression: \n >";
+	cin >> input;
+
+	for (auto& c : input)
+	{
+
+	}
+	
+    
 }
 

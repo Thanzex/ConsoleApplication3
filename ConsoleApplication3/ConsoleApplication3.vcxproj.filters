@@ -24,6 +24,15 @@
     <ClInclude Include="targetver.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="Vars.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="Operators.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

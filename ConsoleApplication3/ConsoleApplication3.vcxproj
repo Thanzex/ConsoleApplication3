@@ -145,8 +145,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Operators.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Vars.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication3.cpp" />
