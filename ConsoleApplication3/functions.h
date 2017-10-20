@@ -1,6 +1,5 @@
 #pragma once
 
-
 std::string SingleBlocksFirstPass(std::string input)
 {
 	/*
@@ -81,4 +80,44 @@ std::string OperandPass(std::string input,std::string operands)	//Trova inizio e
 		}
 	}
 	return input;
+}
+
+bool AssignVariable(std::map<std::string, float> a, std::string b)
+{
+	int i;
+	std::size_t found = b.find('=');
+	if (found != std::string::npos)
+		i = found;
+	else return 0;
+
+	int begin = Block::FindBlockEnd(b, i, true);
+	Block fblock = Block(b.substr(begin, (i)-begin));
+	int end = Block::FindBlockEnd(b, i, false);
+	Block sblock = Block(b.substr(i + 1, end - (i)));
+	sblock.Evaluate();
+	variablesMap.insert({ fblock.rawText.substr(1, fblock.rawText.length() - 2), sblock.value }); //std::pair<std::string, float>(fblock.rawText.substr(1, fblock.rawText.length() - 1), sblock.value)
+
+	return 1;
+}
+
+
+float ExecuteOperation(std::string working, int i)
+{
+	float value;
+	if (std::find(operations.begin(), operations.end(), working[i]) != operations.end())
+	{
+		if (DEBUG2) cout << "\nExecuting Operation";
+		if (DEBUG2) cout << "\n\tFound Operator: "<<working[i];
+		int begin = Block::FindBlockEnd(working, i, true);
+		Block fblock = Block(working.substr(begin, (i)-begin));
+		int end = Block::FindBlockEnd(working, i, false);
+		Block sblock = Block(working.substr(i + 1, end - (i)));
+		if (DEBUG2) cout << "\n\tBlock 1: " << fblock.rawText << " Block 2: " << sblock.rawText;
+		if (DEBUG2) cout << "\n\tGenerating Pending Op";
+		Op pending = Op(fblock, sblock, working[i]);
+		if (DEBUG2) cout << "\n\tExecuting...";
+		value = pending.Execute();
+		//cout << "\n\tvalue ExecuteOp : " << value;
+	}
+	return value;
 }

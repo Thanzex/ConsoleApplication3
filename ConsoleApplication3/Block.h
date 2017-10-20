@@ -4,10 +4,13 @@ class Block
 {
 public:
 	Block(std::string);
+	Block();
 	void Evaluate();
 	~Block();
 	static int FindEnd(char*, int);
 	static int FindBlockEnd(std::string, int, int);
+	bool isExpression();
+	bool isVariable();
 
 	std::string rawText;
 	float value = NULL;
@@ -18,6 +21,10 @@ private:
 
 };
 
+Block::Block()
+{
+}
+
 Block::Block(std::string a) // Crea un blocco passando il testo
 {
 	rawText = a;
@@ -25,8 +32,33 @@ Block::Block(std::string a) // Crea un blocco passando il testo
 
 inline void Block::Evaluate()
 {
-	
+	if (DEBUG2) cout << "\n\t\t\tEvaluating Block";
+	if (isExpression())
+	{
+		if (DEBUG2) cout << "\n\t\t\tIt's an expression, evaluating outer-most operand...";
+		int IndexFirstOp = Block::FindBlockEnd(rawText, rawText.length() - 2, true) - 1;
+		value = ExecuteOperation(rawText, IndexFirstOp);
+		if (DEBUG2) cout << "\n\t\t\tFinished evaluating expression";
+	}
+	else if (isVariable())
+	{
+		if (DEBUG2) cout << "\n\t\t\tIs variable, taking value";
+		if (variablesMap.find(rawText.substr(1, rawText.length() - 2)) != variablesMap.end())
+			value = variablesMap[rawText.substr(1, rawText.length() - 2)];
+		else
+			cout << "\nVariable not found";
+	}
+	else if (isdigit(rawText[1]))
+	{
+		if (DEBUG2) cout << "\n\t\t\tIs number, returning value";
+		value = stof(rawText.substr(1, rawText.length() - 2));
+	}
+	else
+	{
+		cout << "\nExpression Error";
+	}
 }
+
 
 Block::~Block()
 {
@@ -70,4 +102,26 @@ inline int Block::FindBlockEnd(std::string a, int b,int c)  // Trova parentesi i
 	}
 	if (DEBUG) cout << "\n\treturn "<< i;
 	return i;
+}
+
+inline bool Block::isExpression()
+{
+	bool itIs = false;
+	if (DEBUG3) cout << "\n\t\t\t\tChecking if expression...";
+	for (auto &c : operations)
+	{
+		std::size_t found = rawText.find(c);
+		if (found != std::string::npos) itIs = true;
+	}
+	if (DEBUG2) cout << "\n\t\t\t\tResult of found: " << itIs;
+	if (itIs) return true;
+	else return false;
+}
+
+inline bool Block::isVariable()
+{
+	if (DEBUG3) cout << "\n\t\t\t\tChecking if variable...";
+	if (DEBUG2) cout << "\n\t\t\t\tResult of isalpha: " << isalpha(rawText[1]);
+	if (isalpha(rawText[1])) return true;
+	else return false;
 }
